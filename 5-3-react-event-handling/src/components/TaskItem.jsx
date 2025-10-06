@@ -3,7 +3,7 @@ import React from "react";
 export default function TaskItem({ id, text, onDelete }) {
   return (
     <li className="item">
-      {/* 🆕 Display Task Text */}
+      {/* 🆕 Display TAask Text */}
       <span className="item__text">{text}</span>
 
       {/* 🆕 Deeeelete Button */}
