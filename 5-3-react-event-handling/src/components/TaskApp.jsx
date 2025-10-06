@@ -2,31 +2,47 @@ import React, { useState } from "react";
 import TaskList from "./TaskList";
 
 export default function TaskApp() {
-  
+  // ✅ Step 1: State for controlled input
+  const [text, setText] = useState("");
+
+  // ✅ Step 2: New state to hold all tasks
+  const [tasks, setTasks] = useState([]);
+
+  // ✅ Step 3: Handle adding a new task
   const handleSubmit = () => {
-   
+    // Don’t allow empty input
+    if (text.trim() === "") return;
+
+    // Add new task object { id, text }
+    setTasks((prevTasks) => [
+      ...prevTasks,
+      { id: Date.now(), text: text.trim() },
+    ]);
+
+    // Clear input after submission
+    setText("");
   };
 
-  
+  // ✅ Step 4: Handle deleting a task by id
   const handleDelete = (id) => {
-    // TODO: filter tasks by id to remove the clicked one
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   };
 
-  
+  // ✅ Step 5: Clear all tasks
   const handleClearAll = () => {
-    // TODO: set tasks to empty array
+    setTasks([]);
   };
 
   return (
     <section className="card">
-      {/*Controlled Input */}
+      {/* Controlled Input */}
       <div className="inputRow">
         <input
           type="text"
           placeholder="Type a task..."
           className="input"
-          // TODO: value={text}
-          // TODO: onChange={(e) => setText(e.target.value)}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") handleSubmit();
           }}
@@ -36,11 +52,13 @@ export default function TaskApp() {
         </button>
       </div>
 
-      {/*Render Task List and Enable Delete */}
-      {/*Pass tasks and onDelete */}
-      <TaskList /* tasks={tasks} onDelete={handleDelete} */ />
+      {/* Display current input (optional for debugging) */}
+      {/* <p>{text}</p> */}
 
-      {/*Clear All */}
+      {/* ✅ Step 6: Pass tasks and delete handler as props */}
+      <TaskList tasks={tasks} onDelete={handleDelete} />
+
+      {/* Clear All */}
       <div className="footerRow">
         <button className="btn btn--ghost" onClick={handleClearAll}>
           Clear All
