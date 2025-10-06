@@ -13,7 +13,7 @@ export default function TaskApp() {
     // Don’t allow empty input
     if (text.trim() === "") return;
 
-    // Add new task object { id, text }
+    // Add new tasSk object { id, text }
     setTasks((prevTasks) => [
       ...prevTasks,
       { id: Date.now(), text: text.trim() },
